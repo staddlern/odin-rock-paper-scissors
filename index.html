@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Rock Paper Scissors</title>
+    </head>
+    <body>
+        <script>
+
+            let computerScore = 0;
+            let playerScore = 0;
+            let scoreChart = [[0,-1,1],[1,0,-1],[-1,1,0]];
+            let wordChart = ["rock", "paper", "scissors"];
+
+            function getComputerChoice() {
+                let choice = Math.floor(Math.random() * 3);
+                return choice;
+            }
+
+            function getPlayerChoice() {
+                let choice = prompt("Please type either rock, paper, or scissors to choose.");
+                switch(choice.toLowerCase()) {
+                    case "rock":
+                        return 0;
+                    case "paper":
+                        return 1;
+                    case "scissors":
+                        return 2;
+                    default:
+                        return -1;
+                }
+            }
+
+            function playRound() {
+                let computerChoice = getComputerChoice();
+                let playerChoice = getPlayerChoice();
+                console.log("you chose " + wordChart[playerChoice] + ", computer chose " + wordChart[computerChoice] + ".");
+                let result = scoreChart[playerChoice][computerChoice];
+                switch(result) {
+                    case 1:
+                        playerScore++;
+                        console.log("You got a point!");
+                        break;
+                    case -1:
+                        computerScore++;
+                        console.log("Computer got a point...");
+                        break;
+                    case 0:
+                        console.log("Tie.");
+                        break;
+                }
+            }
+
+            function playGame() {
+                for (let i = 0; i < 5; i++) {
+                    playRound();
+                }
+                console.log("You got a total of " + playerScore + " points, computer got a total of " + computerScore + " points.");
+                if (playerScore > computerScore) {
+                    console.log("You win!");
+                }
+                else if (playerScore < computerScore) {
+                    console.log("Computer wins...");
+                }
+                else {
+                    console.log("Tie.");
+                }
+            }
+
+            playGame();
+
+        </script>
+    </body>
+</html>
