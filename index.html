@@ -5,7 +5,18 @@
         <title>Rock Paper Scissors</title>
     </head>
     <body>
+        <div id="buttons">
+            <button onclick="playRound(0)">Rock</button>
+            <button onclick="playRound(1)">Paper</button>
+            <button onclick="playRound(2)">Scissors</button>
+        </div>
+        <div id="messages"></div>
+        <div id="score"></div>
         <script>
+
+            let messages = document.querySelector("#messages");
+            let score = document.querySelector("#score");
+            let buttons = document.querySelector("#buttons");
 
             let computerScore = 0;
             let playerScore = 0;
@@ -31,43 +42,65 @@
                 }
             }
 
-            function playRound() {
+            function playRound(x) {
                 let computerChoice = getComputerChoice();
-                let playerChoice = getPlayerChoice();
-                console.log("you chose " + wordChart[playerChoice] + ", computer chose " + wordChart[computerChoice] + ".");
+                let playerChoice = x;
+                messages.innerHTML = "";
+
+                let playerMessage = document.createElement("p");
+                let computerMessage = document.createElement("p");
+                let winnerMessage = document.createElement("p");
+
+                playerMessage.textContent = "You chose: " + wordChart[playerChoice];
+                computerMessage.textContent = "Computer chose: " + wordChart[computerChoice];
+                
                 let result = scoreChart[playerChoice][computerChoice];
                 switch(result) {
                     case 1:
                         playerScore++;
-                        console.log("You got a point!");
+                        winnerMessage.textContent = "You got a point!";
                         break;
                     case -1:
                         computerScore++;
-                        console.log("Computer got a point...");
+                        winnerMessage.textContent = "Computer got a point...";
                         break;
                     case 0:
-                        console.log("Tie.");
+                        winnerMessage.textContent = "Tie.";
                         break;
                 }
+
+                messages.appendChild(playerMessage);
+                messages.appendChild(computerMessage);
+                messages.appendChild(winnerMessage);
+
+                updateScoreboard();
             }
 
-            function playGame() {
-                for (let i = 0; i < 5; i++) {
-                    playRound();
-                }
-                console.log("You got a total of " + playerScore + " points, computer got a total of " + computerScore + " points.");
-                if (playerScore > computerScore) {
-                    console.log("You win!");
-                }
-                else if (playerScore < computerScore) {
-                    console.log("Computer wins...");
-                }
-                else {
-                    console.log("Tie.");
-                }
-            }
+            function updateScoreboard() {
+                let playerScoreboard = document.createElement("p");
+                let computerScoreboard = document.createElement("p");
+                let winnerScoreboard = document.createElement("h3");
 
-            playGame();
+                score.innerHTML = "";
+
+                playerScoreboard.textContent = "Player: " + playerScore;
+                computerScoreboard.textContent = "Computer: " + computerScore;
+                score.appendChild(playerScoreboard);
+                score.appendChild(computerScoreboard);
+
+                if (playerScore == 5) {
+                    winnerScoreboard.textContent = "You win!";
+                    buttons.innerHTML = "";
+                    buttons.appendChild(winnerScoreboard);
+                }
+                else if (computerScore == 5) {
+                    winnerScoreboard.textContent = "Computer wins...";
+                    buttons.innerHTML = "";
+                    buttons.appendChild(winnerScoreboard);
+                }
+                
+                
+            }
 
         </script>
     </body>
